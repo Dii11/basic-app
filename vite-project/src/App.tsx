@@ -4,9 +4,9 @@ import { AddTodo, TodoList } from './component'
 
 const App=()=>{
  return( <div >
-    <Toaster position='bottom-center'/>
+    <Toaster position='top-right' />
     <AddTodo/>
-    <TodoList/>
+    <TodoList/> 
   </div>)
 
 }

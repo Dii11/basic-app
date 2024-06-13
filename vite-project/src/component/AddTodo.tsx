@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { Input } from ".";
+import { useTodo } from "../context/usetodo";
+import { toast } from "react-hot-toast";
 
 const AddTodo = () => {
   const [input, setInput] = useState<string>("");
-  const [todos, setTodos] = useState<string[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
+  const { addTodo } = useTodo();
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.focus();
@@ -12,9 +14,15 @@ const AddTodo = () => {
   }, []);
 
   const onsubmit = (e: React.FormEvent) => {
-   if(input.trim() !==''){ e.preventDefault();
-    setTodos([...todos, input]);
-    setInput('')}
+    e.preventDefault();
+
+    if (input.trim() !== "") {
+      addTodo(input);
+      setInput("");
+      toast.success("Todo added succefully");
+    } else {
+      toast.error("add failed");
+    }
   };
 
   return (
@@ -26,7 +34,6 @@ const AddTodo = () => {
           type="text"
           className="w-full px-5 py-2 bg-transparent border-2 outline-none border-zinc-600 rounded-xl placeholder:text-zinc-500 focus:border-white"
           placeholder="start typing..."
-          required
           ref={inputRef}
         />
 
